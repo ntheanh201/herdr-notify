@@ -5,6 +5,18 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-07-22
+
+### Added
+
+- `skills/herdr-notify/` — an installable agent skill. Copy it to `~/.claude/skills/` and an
+  agent can diagnose, install, and troubleshoot this on your machine. It leads with diagnosis,
+  since "Herdr never called the notifier" and "the notifier was called and failed" look
+  identical from the outside but need opposite fixes.
+- `AGENTS.md` — build and verification loop for agents contributing to this repo, plus the five
+  invariants that silently revert users to Script Editor banners when broken. `CLAUDE.md`
+  points at it.
+
 ## [1.0.0] - 2026-07-22
 
 Initial release. Verified against Herdr 0.7.5 on macOS 15.7.5.
@@ -36,4 +48,5 @@ Initial release. Verified against Herdr 0.7.5 on macOS 15.7.5.
   detail, not a supported extension point. If a future Herdr release changes it, banners will
   silently revert to Script Editor and the shim log will go quiet.
 
+[1.1.0]: https://github.com/ntheanh201/herdr-notify/releases/tag/v1.1.0
 [1.0.0]: https://github.com/ntheanh201/herdr-notify/releases/tag/v1.0.0

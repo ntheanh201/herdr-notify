@@ -136,6 +136,26 @@ defaults export com.apple.ncprefs - | plutil -convert json - -o - 2>/dev/null
 the osascript fallback, so the notifier must accept a title-only notification — it does, but
 that's the first thing to check if you fork it.
 
+## Using this with a coding agent
+
+Two entry points, depending on which side you're on.
+
+**Have an agent set this up for you.** Install the bundled skill, then just ask:
+
+```sh
+cp -R skills/herdr-notify ~/.claude/skills/
+```
+
+It teaches the agent to diagnose first — distinguishing "Herdr never called the notifier" from
+"the notifier was called and failed", which look identical from the outside — then install,
+verify, and check the traps that make this look broken when it isn't. Useful prompts:
+*"my Herdr notifications show up as Script Editor"*, *"Herdr plays a sound but no banner
+appears"*, *"change the herdr-notify icon to 🐕"*.
+
+**Have an agent contribute here.** [AGENTS.md](AGENTS.md) documents the build and verification
+loop plus the five invariants that silently revert users to Script Editor banners when broken.
+`CLAUDE.md` just points at it.
+
 ## Files
 
 | File | Purpose |
@@ -144,6 +164,8 @@ that's the first thing to check if you fork it.
 | `makeicon.swift` | Renders an emoji into a macOS `.iconset` |
 | `build.sh` | Compile, generate icon, assemble bundle, ad-hoc sign, register |
 | `install.sh` | `build.sh` plus the shim, with environment checks |
+| `AGENTS.md` | Instructions for coding agents working on this repo |
+| `skills/herdr-notify/` | Installable agent skill for setting this up on a machine |
 
 ## License
 
