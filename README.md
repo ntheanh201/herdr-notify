@@ -1,7 +1,13 @@
 # herdr-notify
 
+[![build](https://github.com/ntheanh201/herdr-notify/actions/workflows/build.yml/badge.svg)](https://github.com/ntheanh201/herdr-notify/actions/workflows/build.yml)
+[![release](https://img.shields.io/github/v/release/ntheanh201/herdr-notify)](https://github.com/ntheanh201/herdr-notify/releases/latest)
+[![license](https://img.shields.io/github/license/ntheanh201/herdr-notify)](LICENSE)
+
 Native macOS notifications for [Herdr](https://herdr.dev) — with the right app name, your own
 icon, and **click a banner to jump straight to the pane that fired it**.
+
+Tested against Herdr 0.7.5 on macOS 15. See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 <!-- Replace with a screenshot of a banner if you like: ![banner](docs/banner.png) -->
 
@@ -30,6 +36,12 @@ macOS grants it proper notification authorization and treats it like any modern 
 git clone https://github.com/ntheanh201/herdr-notify.git
 cd herdr-notify
 ./install.sh
+```
+
+To pin a release instead of tracking `main`:
+
+```sh
+git clone --branch v1.0.0 https://github.com/ntheanh201/herdr-notify.git
 ```
 
 That builds `~/Applications/Herdr Notify.app`, installs a `terminal-notifier` shim at

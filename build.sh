@@ -49,7 +49,11 @@ PLIST
 
 codesign --force --sign - --identifier dev.herdr.notify "$APP"
 codesign -v "$APP"
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$APP"
+
+# Registering with LaunchServices makes macOS pick up a changed icon sooner. It's a
+# nicety, not a requirement, and it isn't meaningful on a CI runner — never fail on it.
+LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
+[ -x "$LSREGISTER" ] && "$LSREGISTER" -f "$APP" || true
 
 echo "==> done. test with:  herdr notification show \"test\" --body \"hello\""
 echo "    (if the icon looks stale, run: killall usernoted)"

@@ -1,0 +1,45 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: swiftc --version
+
+      - name: Build notifier
+        run: swiftc -O -o /tmp/herdr-notify main.swift -framework UserNotifications -framework AppKit
+
+      - name: Build icon renderer
+        run: swiftc -O -o /tmp/makeicon makeicon.swift -framework AppKit
+
+      - name: Render icon and pack .icns
+        run: |
+          /tmp/makeicon "🐑" /tmp/AppIcon.iconset
+          iconutil -c icns /tmp/AppIcon.iconset -o /tmp/AppIcon.icns
+          test -s /tmp/AppIcon.icns
+
+      - name: Assemble and sign the bundle
+        run: ./build.sh
+
+      - name: Verify the installed bundle
+        run: |
+          APP="$HOME/Applications/Herdr Notify.app"
+          test -x "$APP/Contents/MacOS/herdr-notify"
+          test -f "$APP/Contents/Resources/AppIcon.icns"
+          codesign -v "$APP"
+          /usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$APP/Contents/Info.plist"
+
+      - name: Shell syntax check
+        run: |
+          sh -n build.sh
+          sh -n install.sh
